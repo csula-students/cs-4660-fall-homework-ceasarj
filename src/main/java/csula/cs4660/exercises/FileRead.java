@@ -12,7 +12,7 @@ public class FileRead {
      * @param file read file
      */
     public FileRead(File file) {
-        numbers = new int[5][5];
+        numbers = new int[5][8];
         FileReader fr;
         BufferedReader br = null;
         try {
