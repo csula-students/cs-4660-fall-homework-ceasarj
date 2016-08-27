@@ -1,6 +1,6 @@
 package csula.cs4660.exercises;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * Introduction Java exercise to read file
@@ -12,7 +12,29 @@ public class FileRead {
      * @param file read file
      */
     public FileRead(File file) {
-        // TODO: read the file content and store content into numbers
+        numbers = new int[5][5];
+        FileReader fr;
+        BufferedReader br = null;
+        try {
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String line = null;
+        try {
+            int row = 0;
+            while((line = br.readLine()) != null){
+                String[] lineInts = line.split(" ");
+                for(int i= 0; i<lineInts.length; i++){
+                    numbers[row][i] = Integer.parseInt(lineInts[i]);
+                }
+                row++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -23,18 +45,39 @@ public class FileRead {
      * lineNumber starts with 0 (programming friendly!)
      */
     public int mean(int lineNumber) {
-        return 0;
+        int mean = 0;
+        for(int row = 0; row<numbers.length; row++){
+            int currMean = 0;
+            for(int col=0; col <numbers[row].length; col++){
+                currMean += numbers[row][col];
+            }
+            currMean /= numbers[row].length;
+            mean = (currMean > mean)?currMean:mean;
+        }
+        return mean;
     }
 
     public int max(int lineNumber) {
-        return 0;
+        int max = 0;
+        for(int num: numbers[lineNumber]){
+            max = (max < num)?num:max;
+        }
+        return max;
     }
 
     public int min(int lineNumber) {
-        return 0;
+        int max = 0;
+        for(int num: numbers[lineNumber]){
+            max = (max > num)?num:max;
+        }
+        return max;
     }
 
     public int sum(int lineNumber) {
-        return 0;
+        int max = 0;
+        for(int num: numbers[lineNumber]){
+            max += num;
+        }
+        return max;
     }
 }
