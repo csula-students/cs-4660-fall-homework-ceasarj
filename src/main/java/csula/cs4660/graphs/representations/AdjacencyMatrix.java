@@ -53,18 +53,17 @@ public class AdjacencyMatrix implements Representation {
     @Override
     public boolean addNode(Node x) {
         Integer value = (Integer)x.getData();
-        if(value >= nodes.length){ //out of bounds
+        if(value >= nodes.length) { //out of bounds
             resizeNodes(x);
             resizeMatrix(x);
-            return true;
         }
-        else if(nodes[value] == null ){
+        else if(nodes[value] == null ) {
             nodes[value] = x;
-            return true;
         }
         else {
             return false;
         }
+        return true;
     }
 
     @Override
