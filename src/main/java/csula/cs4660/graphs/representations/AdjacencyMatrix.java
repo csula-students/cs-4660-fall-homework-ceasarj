@@ -42,7 +42,7 @@ public class AdjacencyMatrix implements Representation {
     public List<Node> neighbors(Node x) {
         Integer xValue = (Integer)x.getData();
         List<Node> neighbors = Lists.newArrayList();
-        for(int yValue=0; yValue<adjacencyMatrix[xValue].length; yValue++) {
+        for(int yValue=0; yValue<adjacencyMatrix[0].length; yValue++) {
             if(adjacencyMatrix[xValue][yValue] > 0) {
                 neighbors.add(nodes[yValue]);
             }
@@ -95,7 +95,6 @@ public class AdjacencyMatrix implements Representation {
         }
         if(adjacencyMatrix[fromValue][toValue] != x.getValue()){ // edge is not already there
             adjacencyMatrix[fromValue][toValue] = x.getValue();
-            adjacencyMatrix[toValue][fromValue] = x.getValue();
             return true;
         }
 
@@ -114,7 +113,6 @@ public class AdjacencyMatrix implements Representation {
         }
         if(adjacencyMatrix[fromValue][toValue] > 0){ // edge is already there
             adjacencyMatrix[fromValue][toValue] = 0;
-            adjacencyMatrix[toValue][fromValue] = 0;
             return true;
         }
         return false;
@@ -159,8 +157,6 @@ public class AdjacencyMatrix implements Representation {
             for(int col=0; col<adjacencyMatrix[row].length; col++)
                 newAdjacencyMatrix[row][col] = adjacencyMatrix[row][col];
 
-
-
         adjacencyMatrix = newAdjacencyMatrix;
     }
 
@@ -181,13 +177,9 @@ public class AdjacencyMatrix implements Representation {
                 int nodeToData = line.get(1);
 
                 adjacencyMatrix[nodeFromData][nodeToData] = line.get(2);
-                adjacencyMatrix[nodeToData][nodeFromData] = line.get(2);
 
                 if(nodes[nodeFromData] == null)
                     nodes[nodeFromData] = new Node(nodeFromData);
-
-                if(nodes[nodeToData] == null)
-                    nodes[nodeToData] = new Node(nodeToData);
             }
 
         });
