@@ -73,7 +73,6 @@ public class AdjacencyList implements Representation {
                     while (it.hasNext()) {
                         Edge edge = it.next();
                         if (edge.getTo().equals(x)) {
-                            System.out.println(edge);
                             edgeTest = edge;
                             nodeTest = node;
                         }
