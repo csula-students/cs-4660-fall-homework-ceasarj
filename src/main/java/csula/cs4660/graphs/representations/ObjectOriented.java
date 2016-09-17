@@ -69,7 +69,7 @@ public class ObjectOriented implements Representation {
 
         nodes.remove(x);
         ArrayList<Edge> edgeList = new ArrayList<>();
-        
+
         edges.forEach(edge->{
             if(edge.getTo().equals(x))
                 edgeList.add(edge);

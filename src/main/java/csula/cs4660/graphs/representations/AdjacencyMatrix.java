@@ -118,7 +118,6 @@ public class AdjacencyMatrix implements Representation {
         return false;
     }
 
-    @Override
     public int distance(Node from, Node to) {
         return adjacencyMatrix[(Integer)from.getData()][(Integer)to.getData()];
     }
