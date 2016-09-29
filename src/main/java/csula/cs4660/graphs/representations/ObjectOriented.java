@@ -1,5 +1,7 @@
 package csula.cs4660.graphs.representations;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import csula.cs4660.graphs.Edge;
 import csula.cs4660.graphs.Node;
 import csula.cs4660.utils.ParserUtil;
@@ -18,8 +20,8 @@ public class ObjectOriented implements Representation {
     private Collection<Edge> edges;
 
     public ObjectOriented(File file) {
-        nodes = new HashSet<>();
-        edges = new ArrayList<>();
+        nodes = Sets.newHashSet();
+        edges = Lists.newArrayList();
 
         List<List<Integer>> numbers = ParserUtil.readFile(file);
         convertList(numbers);
