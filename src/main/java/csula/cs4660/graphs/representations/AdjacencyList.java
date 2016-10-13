@@ -19,14 +19,15 @@ import java.util.*;
  */
 public class AdjacencyList implements Representation {
     private Map<Node, Collection<Edge>> adjacencyList;
-
+    
     public AdjacencyList(File file) {
         adjacencyList = Maps.newHashMap();
         List<List<Integer>> numbers = ParserUtil.readFile(file);
         convertList(numbers);
+
     }
 
-    public AdjacencyList() {
+    protected AdjacencyList() {
 
     }
 
