@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import csula.cs4660.graphs.Edge;
 import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
+import csula.cs4660.utils.SearchUtil;
 
 import java.util.*;
 
@@ -18,10 +19,9 @@ public class BFS implements SearchStrategy {
         Queue<Node> q = new LinkedList<>();
         Set<Node> v = Sets.newHashSet();
         Map<Node, Edge> parent = Maps.newHashMap();
-        List<Edge> path = Lists.newArrayList();
 
         // source equals destination
-        if(source.equals(dist)) return path;
+        if(source.equals(dist)) return Lists.newArrayList();
 
         q.add(source);
         v.add(source);
@@ -30,9 +30,8 @@ public class BFS implements SearchStrategy {
 
         while(!q.isEmpty() && !found) {
             Node curr = q.poll();
-            List<Node> n = graph.neighbors(curr);
 
-            for(Node node: n){ // destination found
+            for(Node node: graph.neighbors(curr)){ // destination found
                 if(node.equals(dist)) {
                     parent.put(
                             node,
@@ -49,17 +48,8 @@ public class BFS implements SearchStrategy {
                     );
                 }
             }
-
         }
 
-        // backtrack
-        Node curr = dist;
-        do{
-            Edge e = parent.get(curr);
-            path.add(e);
-            curr = e.getFrom();
-        }while(!curr.equals(source));
-        Collections.reverse(path);
-        return path;
+        return SearchUtil.getPath(parent, source, dist);
     }
 }

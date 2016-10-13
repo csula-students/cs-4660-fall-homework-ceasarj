@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import csula.cs4660.graphs.Edge;
 import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
+import csula.cs4660.utils.SearchUtil;
 
 import java.util.*;
 
@@ -18,7 +19,6 @@ public class DFS implements SearchStrategy {
         Map<Node, Edge> parent = Maps.newHashMap();
         Stack<Node> s = new Stack<>();
         Set<Node> v = Sets.newHashSet();
-        List<Edge> path = Lists.newArrayList();
 
         s.push(source);
         v.add(source);
@@ -26,9 +26,8 @@ public class DFS implements SearchStrategy {
         Node current = source;
 
         while(!current.equals(dist)){
-            List<Node> n = graph.neighbors(current);
             boolean noNeighbors = true;
-            for(Node neighbor: n){
+            for(Node neighbor: graph.neighbors(current)){
                 if(!v.contains(neighbor)){
                     s.add(neighbor);
                     v.add(neighbor);
@@ -44,14 +43,6 @@ public class DFS implements SearchStrategy {
             if(noNeighbors) current = s.pop();
         }
 
-        // backtrack
-        Node curr = dist;
-        do{
-            Edge e = parent.get(curr);
-            path.add(e);
-            curr = e.getFrom();
-        }while(!curr.equals(source));
-        Collections.reverse(path);
-        return path;
+        return SearchUtil.getPath(parent, source, dist);
     }
 }
