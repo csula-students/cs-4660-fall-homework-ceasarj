@@ -24,9 +24,10 @@ public class AdjacencyList implements Representation {
         adjacencyList = Maps.newHashMap();
         List<List<Integer>> numbers = ParserUtil.readFile(file);
         convertList(numbers);
+
     }
 
-    public AdjacencyList() {
+    protected AdjacencyList() {
 
     }
 
