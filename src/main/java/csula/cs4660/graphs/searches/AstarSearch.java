@@ -7,9 +7,10 @@ import csula.cs4660.graphs.Node;
 import java.util.List;
 
 /**
- * Breadth first search
+ * Perform A* search
  */
-public class BFS implements SearchStrategy {
+public class AstarSearch implements SearchStrategy {
+
     @Override
     public List<Edge> search(Graph graph, Node source, Node dist) {
         return null;
