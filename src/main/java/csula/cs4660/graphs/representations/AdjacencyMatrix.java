@@ -51,7 +51,7 @@ public class AdjacencyMatrix implements Representation {
         for(int yValue=0; yValue<adjacencyMatrix[0].length; yValue++) {
 
             if(adjacencyMatrix[xValue][yValue] > 0) {
-                neighbors.add(nodes[yValue]);
+                neighbors.add(new Node(yValue));
             }
         }
         return neighbors;

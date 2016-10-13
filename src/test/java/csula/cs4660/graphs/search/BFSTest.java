@@ -55,6 +55,7 @@ public class BFSTest extends TestCase {
     public void testBFS1() {
         Arrays.stream(graph1s)
             .forEach(graph -> {
+                System.out.println("yee");
                 assertEquals(
                     "Test BFS on graph 1 from Node 1 to 8",
                     Lists.newArrayList(
