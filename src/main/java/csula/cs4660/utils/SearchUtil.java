@@ -3,6 +3,7 @@ package csula.cs4660.utils;
 import com.google.common.collect.Lists;
 import csula.cs4660.graphs.Edge;
 import csula.cs4660.graphs.Node;
+import csula.cs4660.graphs.NodeWeight;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,4 +27,16 @@ public class SearchUtil {
         return path;
     }
 
+    public static List<Edge> getPathDijkstra(Map<Node, NodeWeight> parents, Node source, Node dist){
+        List<Edge> path = Lists.newArrayList();
+
+        Node curr = dist;
+        do{
+            Edge e = parents.get(curr).getEdge();
+            path.add(e);
+            curr = e.getFrom();
+        }while(!curr.equals(source));
+        Collections.reverse(path);
+        return path;
+    }
 }
