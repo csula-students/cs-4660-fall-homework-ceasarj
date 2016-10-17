@@ -1,0 +1,16 @@
+link:https://github.com/csula-students/cs-4660-fall-homework-ceasarj/blob/quiz-2/src/main/java/csula/cs4660/quizes/App.java
+
+BFS:
+Empty Room:Dark Room:-30
+Dark Room:Dark Room:20
+Dark Room:Dire Tombs:-20
+Dire Tombs:Chamber:-30
+Chamber:Dark Room:0
+
+
+Dijkstra:
+Empty Room:Dark Room:-30
+Dark Room:Dark Room:20
+Dark Room:Dire Tombs:-20
+Dire Tombs:Chamber:-30
+Chamber:Dark Room:0

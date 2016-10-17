@@ -6,7 +6,7 @@ import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
 import csula.cs4660.graphs.representations.Representation;
 import csula.cs4660.graphs.searches.BFS;
-import csula.cs4660.graphs.searches.DijkstraSearch;
+import csula.cs4660.graphs.searches.DijkstraSearchQuiz;
 import csula.cs4660.graphs.searches.SearchStrategy;
 import csula.cs4660.quizes.models.State;
 
@@ -31,7 +31,7 @@ public class App {
         printPath(BFSPath);
 
 
-        List<Edge> dijkstraPath = graph.search(new DijkstraSearch(), initialNode, finialNode);
+        List<Edge> dijkstraPath = graph.search(new DijkstraSearchQuiz(), initialNode, finialNode);
         System.out.println("\n\nDijkstra:");
         printPath(dijkstraPath);
 
