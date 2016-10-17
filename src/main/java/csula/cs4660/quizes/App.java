@@ -1,5 +1,13 @@
 package csula.cs4660.quizes;
 
+import com.google.common.collect.Sets;
+import csula.cs4660.graphs.Edge;
+import csula.cs4660.graphs.Graph;
+import csula.cs4660.graphs.Node;
+import csula.cs4660.graphs.representations.Representation;
+import csula.cs4660.graphs.searches.BFS;
+import csula.cs4660.graphs.searches.DijkstraSearch;
+import csula.cs4660.graphs.searches.SearchStrategy;
 import csula.cs4660.quizes.models.State;
 
 import java.util.*;
@@ -11,34 +19,73 @@ public class App {
     public static void main(String[] args) {
         // to get a state, you can simply call `Client.getState with the id`
         State initialState = Client.getState("10a5461773e8fd60940a56d2e9ef7bf4").get();
-        System.out.println(initialState);
-        // to get an edge between state to its neighbor, you can call stateTransition
-        System.out.println(Client.stateTransition(initialState.getId(), initialState.getNeighbors()[0].getId()));
+        State finalState = Client.getState("e577aa79473673f6158cc73e0e5dc122").get();
 
-        Queue<State> frontier = new LinkedList<>();
-        Set<State> exploredSet = new HashSet<>();
-        Map<State, State> parents = new HashMap<>();
-        frontier.add(initialState);
+        Graph graph = buildGraph(initialState);
 
-        while (!frontier.isEmpty()) {
-            State current = frontier.poll();
-            exploredSet.add(current);
+        Node initialNode = new Node(initialState.getId());
+        Node finialNode = new Node(finalState.getId());
 
-            // for every possible action
-            for (State neighbor: Client.getState(current.getId()).get().getNeighbors()) {
-                // state transition
-                if (neighbor.getId().equals("e577aa79473673f6158cc73e0e5dc122")) {
-                    // construct actions from endTile
-                    System.out.println("found solution with depth of " + findDepth(parents, current, initialState));
-                }
-                if (!exploredSet.contains(neighbor)) {
-                    parents.put(neighbor, current);
-                    frontier.add(neighbor);
+        List<Edge> BFSPath = graph.search(new BFS(), initialNode, finialNode);
+        System.out.println("BFS:");
+        printPath(BFSPath);
+
+
+        List<Edge> dijkstraPath = graph.search(new DijkstraSearch(), initialNode, finialNode);
+        System.out.println("\n\nDijkstra:");
+        printPath(dijkstraPath);
+
+    }
+
+    public static Graph buildGraph(State source){
+        //classLoader.getResource("homework-1/graph-1.txt").getFile()
+        Queue<String> frontier = new LinkedList<>();
+        Set<String> exploredSet = Sets.newHashSet();
+        Graph graph = new Graph(Representation.of(Representation.STRATEGY.ADJACENCY_LIST));
+
+        frontier.add(source.getId());
+        exploredSet.add(source.getId());
+
+        while(!frontier.isEmpty()){
+            String curr = frontier.poll();
+            Node currNode = new Node(curr);
+            graph.addNode(currNode);
+            for(State neighbor: Client.getState(curr).get().getNeighbors()){
+                if(!exploredSet.contains(neighbor.getId())){
+                    Node neighborNode = new Node(neighbor.getId());
+                    int weight = Client.stateTransition(curr, neighbor.getId())
+                            .get()
+                            .getEvent()
+                            .getEffect();
+                    graph.addNode(neighborNode);
+                    graph.addEdge(new Edge(currNode, neighborNode, weight));
+                    //System.out.println(weight);
+                    frontier.add(neighbor.getId());
+                    exploredSet.add(neighbor.getId());
                 }
             }
         }
+        return graph;
+    }
 
-        System.out.println("Not found solution");
+    public static void printPath(List<Edge> path){
+        path.forEach(edge->{
+            Node from = edge.getFrom();
+            Node to = edge.getTo();
+            int weight = edge.getValue();
+
+            State fromState =  Client.getState((String)from.getData()).get();
+            State toState =  Client.getState((String)to.getData()).get();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(fromState.getLocation().getName())
+                    .append(":")
+                    .append(toState.getLocation().getName())
+                    .append(":")
+                    .append(weight);
+
+            System.out.println(sb.toString());
+        });
     }
 
     public static int findDepth(Map<State, State> parents, State current, State start) {

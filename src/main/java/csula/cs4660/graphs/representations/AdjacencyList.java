@@ -28,7 +28,7 @@ public class AdjacencyList implements Representation {
     }
 
     protected AdjacencyList() {
-
+        adjacencyList = Maps.newHashMap();
     }
 
     @Override
