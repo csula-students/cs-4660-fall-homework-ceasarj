@@ -10,6 +10,7 @@ import csula.cs4660.graphs.searches.DFS;
 import csula.cs4660.graphs.searches.DijkstraSearchQuiz;
 import csula.cs4660.graphs.searches.SearchStrategy;
 import csula.cs4660.quizes.models.State;
+import csula.cs4660.quizes.models.DTO;
 
 import java.util.*;
 
@@ -17,6 +18,11 @@ import java.util.*;
  * Here is your quiz entry point and your app
  */
 public class App {
+    public enum SEARCH_STRATEGY {
+        BFS,
+        DIJKSTRA
+    }
+
     public static void main(String[] args) {
         // to get a state, you can simply call `Client.getState with the id`
         State initialState = Client.getState("10a5461773e8fd60940a56d2e9ef7bf4").get();
@@ -60,6 +66,7 @@ public class App {
             for(State neighbor: Client.getState(curr).get().getNeighbors()){
                 if(!exploredSet.contains(neighbor.getId())) {
                     frontier.add(neighbor.getId());
+
                 }
                     Node neighborNode = new Node(neighbor.getId());
                     int weight = Client.stateTransition(curr, neighbor.getId())
@@ -96,15 +103,29 @@ public class App {
         });
     }
 
-    public static int findDepth(Map<State, State> parents, State current, State start) {
+    public static Map<State, Integer> constructPath(Map<State, State> parents, Map<State, Integer> distances, State current) {
         State c = current;
-        int depth = 0;
+        Map<State, Integer> result = new LinkedHashMap<>();
 
-        while (!c.equals(start)) {
-            depth ++;
+        while (parents.get(c) != null) {
+            result.put(c, distances.get(c));
             c = parents.get(c);
         }
+        result.put(c, distances.get(c));
 
-        return depth;
+        return result;
+    }
+
+    public static class StateComparator implements Comparator<State> {
+        private final Map<State, Integer> distances;
+        public StateComparator(Map<State, Integer> distances) {
+            this.distances = distances;
+        }
+
+        @Override
+        public int compare(State a, State b) {
+            return distances.getOrDefault(b, Integer.MAX_VALUE)
+                .compareTo(distances.getOrDefault(a, Integer.MAX_VALUE));
+        }
     }
 }

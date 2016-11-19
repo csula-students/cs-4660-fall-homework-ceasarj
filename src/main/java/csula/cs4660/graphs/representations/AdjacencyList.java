@@ -149,18 +149,17 @@ public class AdjacencyList implements Representation {
         }
     }
 
-
-
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        adjacencyList.forEach( (k,edges)->{
+        adjacencyList.forEach((k, edges) -> {
             sb.append(k.getData() + "->");
-            edges.forEach(edge ->{
+            edges.forEach(edge -> {
                 sb.append("    " + edge.getTo().getData());
             });
             sb.append("\n");
         });
         return sb.toString();
     }
+
 }

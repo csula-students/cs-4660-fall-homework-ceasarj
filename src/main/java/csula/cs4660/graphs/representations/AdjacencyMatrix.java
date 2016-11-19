@@ -6,15 +6,13 @@ import csula.cs4660.graphs.Node;
 import csula.cs4660.utils.ParserUtil;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Adjacency matrix in a sense store the nodes in two dimensional array
- *
- * TODO: please fill the method body of this class
  */
 public class AdjacencyMatrix implements Representation {
     private Node[] nodes;
