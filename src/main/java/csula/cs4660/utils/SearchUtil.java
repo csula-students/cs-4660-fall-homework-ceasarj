@@ -34,6 +34,7 @@ public class SearchUtil {
         do{
             Edge e = parents.get(curr).getEdge();
             path.add(e);
+            System.out.println(path.size());
             curr = e.getFrom();
         }while(!curr.equals(source));
         Collections.reverse(path);

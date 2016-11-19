@@ -23,7 +23,8 @@ public class DijkstraSearchQuiz implements SearchStrategy {
         q.add(source);
         parents.put(source, new NodeWeight(new Edge(source, source, 0), 0));
 
-        while(!q.isEmpty()){
+        boolean found = false;
+        while(!q.isEmpty() && !found){
             Node curr = q.poll();
             for(Node neighboor: graph.neighbors(curr)){
                 if(!parents.containsKey(neighboor)){
@@ -39,7 +40,7 @@ public class DijkstraSearchQuiz implements SearchStrategy {
                     NodeWeight neighboorWeight = parents.get(neighboor);
                     NodeWeight currWeight = parents.get(curr);
                     int currWeightValue = currWeight.getWeight() + graph.distance(curr, neighboor);
-                    if(currWeightValue > neighboorWeight.getWeight()) {
+                    if(currWeightValue < neighboorWeight.getWeight()) {
                         parents.replace(
                                 neighboor,
                                 new NodeWeight(
@@ -49,6 +50,7 @@ public class DijkstraSearchQuiz implements SearchStrategy {
                         );
 
                     }
+                    if(neighboor.equals(dist)) found = true;
                 }
             }
         }

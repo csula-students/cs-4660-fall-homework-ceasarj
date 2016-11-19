@@ -6,6 +6,7 @@ import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
 import csula.cs4660.graphs.representations.Representation;
 import csula.cs4660.graphs.searches.BFS;
+import csula.cs4660.graphs.searches.DFS;
 import csula.cs4660.graphs.searches.DijkstraSearchQuiz;
 import csula.cs4660.graphs.searches.SearchStrategy;
 import csula.cs4660.quizes.models.State;
@@ -26,14 +27,18 @@ public class App {
         Node initialNode = new Node(initialState.getId());
         Node finialNode = new Node(finalState.getId());
 
-        List<Edge> BFSPath = graph.search(new BFS(), initialNode, finialNode);
+        List<Edge> path = graph.search(new BFS(), initialNode, finialNode);
         System.out.println("BFS:");
-        printPath(BFSPath);
+        printPath(path);
 
 
-        List<Edge> dijkstraPath = graph.search(new DijkstraSearchQuiz(), initialNode, finialNode);
+        path = graph.search(new DijkstraSearchQuiz(), initialNode, finialNode);
         System.out.println("\n\nDijkstra:");
-        printPath(dijkstraPath);
+        printPath(path);
+
+        List<Edge> test = graph.search(new DFS(), initialNode, finialNode);
+        System.out.println("Dijkstra:");
+        printPath(test);
 
     }
 
@@ -46,12 +51,16 @@ public class App {
         frontier.add(source.getId());
         exploredSet.add(source.getId());
 
+        int edgeCounter =0;
+        System.out.println();
         while(!frontier.isEmpty()){
             String curr = frontier.poll();
             Node currNode = new Node(curr);
             graph.addNode(currNode);
             for(State neighbor: Client.getState(curr).get().getNeighbors()){
-                if(!exploredSet.contains(neighbor.getId())){
+                if(!exploredSet.contains(neighbor.getId())) {
+                    frontier.add(neighbor.getId());
+                }
                     Node neighborNode = new Node(neighbor.getId());
                     int weight = Client.stateTransition(curr, neighbor.getId())
                             .get()
@@ -59,11 +68,10 @@ public class App {
                             .getEffect();
                     graph.addNode(neighborNode);
                     graph.addEdge(new Edge(currNode, neighborNode, weight));
-                    //System.out.println(weight);
-                    frontier.add(neighbor.getId());
                     exploredSet.add(neighbor.getId());
-                }
+                //System.out.println(++edgeCounter);
             }
+            //System.out.println();
         }
         return graph;
     }
