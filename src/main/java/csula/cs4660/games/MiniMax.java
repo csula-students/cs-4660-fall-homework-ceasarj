@@ -12,15 +12,14 @@ public class MiniMax {
 
 
     public static Node getBestMove(Graph graph, Node root, Integer depth, Boolean max) {
-        createMiniMaxStates(graph, root, depth, max).getData();
-        return SearchUtil.getMaxMove(graph, root);
+        return createMiniMaxStates(graph, root, depth, max);
     }
 
     private static Node createMiniMaxStates(Graph graph, Node root, Integer depth, Boolean max){
         root = graph.getNode(root).get();
         List<Node> neighboors = graph.neighbors(root);
         MiniMaxState rootState = (MiniMaxState)root.getData();
-
+        Node maxNode = null;
         if(neighboors.size() != 0 && depth != 0){ // check if there is a neighboor to update minimax value
 
             if(max){ // max turn
@@ -31,8 +30,8 @@ public class MiniMax {
                     MiniMaxState newStae = (MiniMaxState)createMiniMaxStates(graph, n, depth - 1, !max)
                             .getData();
 
-                    //
                     maxVal = Math.max( maxVal, newStae.getValue());
+                    maxNode = newStae.getValue() > maxVal ? n : maxNode;
                     rootState.set(maxVal);
                 }
 
@@ -49,6 +48,9 @@ public class MiniMax {
                 }
             }
         }
+
+        if(maxNode != null) return graph.getNode(maxNode).get();
+
         return root;
     }
 }

@@ -10,8 +10,7 @@ import java.util.List;
 
 public class AlphaBeta {
     public static Node getBestMove(Graph graph, Node source, Integer depth, Integer alpha, Integer beta, Boolean max) {
-        getBestMoveHelper(graph, source, depth, alpha, beta, max);
-        return SearchUtil.getMaxMove(graph, source);
+        return getBestMoveHelper(graph, source, depth, alpha, beta, max);
     }
 
     public static Node getBestMoveHelper(Graph graph, Node source,
@@ -19,6 +18,7 @@ public class AlphaBeta {
         source = graph.getNode(source).get();
         List<Node> neighboors = graph.neighbors(source);
         MiniMaxState rootState = (MiniMaxState)source.getData();
+        Node maxNode = null;
 
         if(neighboors.size() != 0 && depth != 0){ // check if there is a neighboor to update minimax value
             int i = 0;
@@ -32,6 +32,8 @@ public class AlphaBeta {
 
                     maxVal = Math.max( maxVal, newStae.getValue());
                     alpha = Math.max(alpha, maxVal);
+                    
+                    maxNode = newStae.getValue() > maxVal ? neighboors.get(i) : maxNode;
 
                     rootState.set(maxVal);
 
@@ -57,6 +59,8 @@ public class AlphaBeta {
 
 
         }
+        if(maxNode != null) return graph.getNode(maxNode).get();
+
         return source;
     }
 }
