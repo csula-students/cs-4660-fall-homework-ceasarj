@@ -3,6 +3,7 @@ package csula.cs4660.games;
 import csula.cs4660.games.models.MiniMaxState;
 import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
+import csula.cs4660.utils.SearchUtil;
 
 import java.util.List;
 
@@ -12,16 +13,7 @@ public class MiniMax {
 
     public static Node getBestMove(Graph graph, Node root, Integer depth, Boolean max) {
         createMiniMaxStates(graph, root, depth, max).getData();
-        MiniMaxState rootState = (MiniMaxState)root.getData();
-
-        // look for the max move
-        for(Node n: graph.neighbors(root)){
-            MiniMaxState neighboorState = (MiniMaxState) n.getData();
-
-            if(rootState.getValue() == neighboorState.getValue()) return graph.getNode(n).get();
-        }
-
-        return root;
+        return SearchUtil.getMaxMove(graph, root);
     }
 
     private static Node createMiniMaxStates(Graph graph, Node root, Integer depth, Boolean max){
@@ -56,8 +48,6 @@ public class MiniMax {
                     rootState.set(minVal);
                 }
             }
-
-
         }
         return root;
     }

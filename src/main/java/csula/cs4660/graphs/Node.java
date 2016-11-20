@@ -8,7 +8,8 @@ package csula.cs4660.graphs;
  */
 public class Node<T> {
     private final T data;
-
+    public int alpha;
+    public int beta;
     public Node(T data) {
         this.data = data;
     }
@@ -39,4 +40,5 @@ public class Node<T> {
     public int hashCode() {
         return getData() != null ? getData().hashCode() : 0;
     }
+
 }

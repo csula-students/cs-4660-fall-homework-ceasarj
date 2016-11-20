@@ -10,4 +10,13 @@ public class NodeComparator implements Comparator<NodeWeight> {
     public int compare(NodeWeight o1, NodeWeight o2) {
         return o1.getWeight() - o2.getWeight();
     }
+
+//    /**
+//     * Created by ceejay562 on 11/19/2016.
+//     */
+//    public static class AlphaBetaNode extends Node<> {
+//        public AlphaBetaNode(){
+//
+//        }
+//    }
 }

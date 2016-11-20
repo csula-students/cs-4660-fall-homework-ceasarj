@@ -1,7 +1,9 @@
 package csula.cs4660.utils;
 
 import com.google.common.collect.Lists;
+import csula.cs4660.games.models.MiniMaxState;
 import csula.cs4660.graphs.Edge;
+import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
 import csula.cs4660.graphs.NodeWeight;
 
@@ -39,5 +41,18 @@ public class SearchUtil {
         }while(!curr.equals(source));
         Collections.reverse(path);
         return path;
+    }
+
+    public static Node getMaxMove(Graph graph, Node root){
+        MiniMaxState rootState = (MiniMaxState)root.getData();
+
+        // look for the max move
+        for(Node n: graph.neighbors(root)){
+            MiniMaxState neighboorState = (MiniMaxState) n.getData();
+
+            if(rootState.getValue() == neighboorState.getValue()) return graph.getNode(n).get();
+        }
+
+        return root;
     }
 }
