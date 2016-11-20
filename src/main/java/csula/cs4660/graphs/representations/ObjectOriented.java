@@ -28,7 +28,8 @@ public class ObjectOriented implements Representation {
     }
 
     public ObjectOriented() {
-
+        nodes = Sets.newHashSet();
+        edges = Lists.newArrayList();
     }
 
     @Override
@@ -118,6 +119,19 @@ public class ObjectOriented implements Representation {
     @Override
     public Optional<Node> getNode(int index) {
         return Optional.ofNullable(new Node(index));
+    }
+
+    @Override
+    public Optional<Node> getNode(Node node) {
+        Iterator<Node> it = nodes.iterator();
+        Optional<Node> opt = Optional.empty();
+        while (it.hasNext()) {
+            Node curr = it.next();
+            if (curr.equals(node)) {
+                opt = Optional.ofNullable(curr);
+            }
+        }
+        return opt;
     }
 
     private void convertList(List<List<Integer>> numbers){

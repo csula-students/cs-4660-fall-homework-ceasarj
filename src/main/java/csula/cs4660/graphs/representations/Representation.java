@@ -64,5 +64,7 @@ public interface Representation {
 
     Optional<Node> getNode(int index);
 
+    Optional<Node> getNode(Node node);
+
     String toString();
 }

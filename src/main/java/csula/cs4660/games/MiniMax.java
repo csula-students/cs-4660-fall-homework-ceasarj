@@ -1,12 +1,64 @@
 package csula.cs4660.games;
 
+import csula.cs4660.games.models.MiniMaxState;
 import csula.cs4660.graphs.Graph;
 import csula.cs4660.graphs.Node;
 
+import java.util.List;
+
 public class MiniMax {
+
+
+
     public static Node getBestMove(Graph graph, Node root, Integer depth, Boolean max) {
-        // TODO: implement minimax to retrieve best move
-        // NOTE: you should mutate graph and node as you traverse and update value
-        return null;
+        createMiniMaxStates(graph, root, depth, max).getData();
+        MiniMaxState rootState = (MiniMaxState)root.getData();
+
+        // look for the max move
+        for(Node n: graph.neighbors(root)){
+            MiniMaxState neighboorState = (MiniMaxState) n.getData();
+
+            if(rootState.getValue() == neighboorState.getValue()) return graph.getNode(n).get();
+        }
+
+        return root;
+    }
+
+    private static Node createMiniMaxStates(Graph graph, Node root, Integer depth, Boolean max){
+        root = graph.getNode(root).get();
+        List<Node> neighboors = graph.neighbors(root);
+        MiniMaxState rootState = (MiniMaxState)root.getData();
+
+        if(neighboors.size() != 0 && depth != 0){ // check if there is a neighboor to update minimax value
+
+            if(max){ // max turn
+                int maxVal = Integer.MIN_VALUE;
+
+                for(Node n: neighboors){
+                    // get the minimaxstate of next node
+                    MiniMaxState newStae = (MiniMaxState)createMiniMaxStates(graph, n, depth - 1, !max)
+                            .getData();
+
+                    //
+                    maxVal = Math.max( maxVal, newStae.getValue());
+                    rootState.set(maxVal);
+                }
+
+            } else { // min turn
+                int minVal = Integer.MAX_VALUE;
+
+                for(Node n: neighboors){
+                    // get the minimaxstate of next node
+                    MiniMaxState newState = (MiniMaxState)createMiniMaxStates(graph, n, depth - 1, !max)
+                            .getData();
+
+                    minVal = Math.min(newState.getValue(), minVal);
+                    rootState.set(minVal);
+                }
+            }
+
+
+        }
+        return root;
     }
 }

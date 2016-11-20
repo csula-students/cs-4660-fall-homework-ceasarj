@@ -162,4 +162,9 @@ public class AdjacencyList implements Representation {
         return sb.toString();
     }
 
+    @Override
+    public Optional<Node> getNode(Node node) {
+        return null;
+    }
+
 }

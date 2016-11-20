@@ -211,4 +211,8 @@ public class AdjacencyMatrix implements Representation {
 
     }
 
+    @Override
+    public Optional<Node> getNode(Node node) {
+        return null;
+    }
 }
