@@ -7,13 +7,18 @@ import csula.cs4660.graphs.Node;
 import csula.cs4660.utils.ParserUtil;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+>>>>>>> 39c73e4c273699657b424d28c7046bfd44402a89
 
 /**
  * Object oriented representation of graph is using OOP approach to store nodes
  * and edges
- *
- * TODO: Please fill the body of methods in this class
  */
 public class ObjectOriented implements Representation {
     private Collection<Node> nodes;
@@ -132,5 +137,18 @@ public class ObjectOriented implements Representation {
                 if(!nodes.contains(to)) nodes.add(to);
             }
         });
+    }
+
+    @Override
+    public Optional<Node> getNode(Node node) {
+        Iterator<Node> iterator = nodes.iterator();
+        Optional<Node> result = Optional.empty();
+        while (iterator.hasNext()) {
+            Node next = iterator.next();
+            if (next.equals(node)) {
+                result = Optional.of(next);
+            }
+        }
+        return result;
     }
 }

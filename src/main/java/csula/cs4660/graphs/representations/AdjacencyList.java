@@ -132,6 +132,7 @@ public class AdjacencyList implements Representation {
         return null;
     }
 
+<<<<<<< HEAD
     public void convertList(List<List<Integer>> numbers){
         for(List<Integer> edge: numbers){
             if(edge.size() > 1) {
@@ -162,5 +163,18 @@ public class AdjacencyList implements Representation {
             sb.append("\n");
         });
         return sb.toString();
+=======
+    @Override
+    public Optional<Node> getNode(Node node) {
+        Iterator<Node> iterator = adjacencyList.keySet().iterator();
+        Optional<Node> result = Optional.empty();
+        while (iterator.hasNext()) {
+            Node next = iterator.next();
+            if (next.equals(node)) {
+                result = Optional.of(next);
+            }
+        }
+        return result;
+>>>>>>> 39c73e4c273699657b424d28c7046bfd44402a89
     }
 }
