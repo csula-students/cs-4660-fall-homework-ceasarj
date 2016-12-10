@@ -6,15 +6,18 @@ import csula.cs4660.graphs.Node;
 import csula.cs4660.utils.ParserUtil;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.lang.reflect.Array;
 import java.util.Arrays;
+=======
+import java.util.Arrays;
+import java.util.Iterator;
+>>>>>>> 39c73e4c273699657b424d28c7046bfd44402a89
 import java.util.List;
 import java.util.Optional;
 
 /**
  * Adjacency matrix in a sense store the nodes in two dimensional array
- *
- * TODO: please fill the method body of this class
  */
 public class AdjacencyMatrix implements Representation {
     private Node[] nodes;
@@ -179,6 +182,7 @@ public class AdjacencyMatrix implements Representation {
         }
     }
 
+<<<<<<< HEAD
     private void convertList(List<List<Integer>> numbers){
         numbers.forEach(line ->{
             // skip the first line because it is the size of matrix nxn
@@ -213,4 +217,18 @@ public class AdjacencyMatrix implements Representation {
 
     }
 
+=======
+    @Override
+    public Optional<Node> getNode(Node node) {
+        Iterator<Node> iterator = Arrays.asList(nodes).iterator();
+        Optional<Node> result = Optional.empty();
+        while (iterator.hasNext()) {
+            Node next = iterator.next();
+            if (next.equals(node)) {
+                result = Optional.of(next);
+            }
+        }
+        return result;
+    }
+>>>>>>> 39c73e4c273699657b424d28c7046bfd44402a89
 }
